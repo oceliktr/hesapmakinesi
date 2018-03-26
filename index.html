@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hesap Makinesi</title>
+    <script src="js/begin.js"></script>
+    <style>
+        button {
+            width: 30px;
+            font-family: sans-serif;
+            font-size: 13px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .sifir {
+            width: 64px;
+        }
+
+        .sonuc {
+            width: 94px;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+
+        .container {
+            width: 140px;
+            position: absolute;
+            left: 50%;
+            top: 30%;
+        }
+    </style>
+    <script>
+        var sayi = 0;
+        var ilkSayi = 0;
+        var islem = "";
+        function HesapEkle(s) {
+            if (islem == "=") //eşittir işlemi yapılmışsa islemi temizle
+            {
+                Temizle();
+                islem = "";
+            }
+            if (islem != "") //işlem tuşlarına basılmış ise (/*-+) sonuc input değerini temizle
+            {
+                document.getElementById("sonuc").value = "";
+            }
+            document.getElementById("sonuc").value += s;
+            sayi = document.getElementById("sonuc").value;
+        }
+
+        function HafizayaAl(p)
+        {
+            ilkSayi = document.getElementById("sonuc").value;
+            sayi = 0;
+            islem = p;
+        }
+        function Temizle() {
+            document.getElementById("sonuc").value = "";
+            ilkSayi = sayi = 0;
+        }
+        function Hesapla() {
+            
+            var sonuc = 0;
+            if (islem == "/")
+                sonuc = ilkSayi / sayi;
+
+            if (islem == "*")
+                sonuc = ilkSayi * sayi;
+            if (islem == "+")
+                sonuc = ilkSayi + sayi;
+            if (islem == "-")
+                sonuc = ilkSayi - sayi;
+            Temizle();
+            document.getElementById("sonuc").value = sonuc;
+            islem = "=";
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <input name="sonuc" id="sonuc" class="sonuc" />
+        <button value="C" onclick="Temizle()">C</button>
+        <button data-num="9">9</button>
+        <button onclick="HesapEkle(8)">8</button>
+        <button onclick="HesapEkle(7)">7</button>
+        <button onclick="HafizayaAl('/')">/</button>
+
+        <button onclick="HesapEkle(4)">4</button>
+        <button onclick="HesapEkle(5)">5</button>
+        <button onclick="HesapEkle(6)">6</button>
+        <button  onclick="HafizayaAl('*')">*</button>
+
+        <button onclick="HesapEkle(1)">1</button>
+        <button onclick="HesapEkle(2)">2</button>
+        <button onclick="HesapEkle(3)">3</button>
+        <button  onclick="HafizayaAl('-')">-</button>
+        <button onclick="HesapEkle(0)" class="sifir">0</button>
+        <button onclick="Hesapla()">=</button>
+        <button  onclick="HafizayaAl('+')">+</button>
+    </div>
+
+</body>
+
+</html>
